@@ -13,6 +13,14 @@ app.get('/',function (req,res) {
 res.send("hello world from the HTTP server");
 });
 
+app.get('/:fileName', function (req, res) {
+// run some server-side code
+var fileName = req.params.fileName;
+console.log(fileName + ' requested');
+// note that __dirname gives the path to the studentServer.js file
+res.sendFile(__dirname + '/'+ fileName);
+});
+
 // adding functionality to log the requests
 app.use(function (req, res, next) {
 var filename = path.basename(req.url);
@@ -21,11 +29,6 @@ console.log("The file " + filename + " was requested.");
 next();
 });
 
-app.get('/test.html', function (req, res) {
-// run some server-side code
-console.log('test.html requested');
-// note that __dirname gives the path to the studentServer.js file
-res.sendFile(__dirname + '/test.html');
-});
+
 
 
