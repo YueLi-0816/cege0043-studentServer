@@ -3,7 +3,12 @@ var express = require('express');
 var path = require("path");
 var app = express();
 
-
+// making requests for data from this server via another server
+app.use(function(req, res, next) {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "X-Requested-With");
+next();
+});
 
 // add an http server to serve files to the Edge browser
 // due to certificate issues it rejects the https files if they are not
@@ -23,6 +28,8 @@ var extension = path.extname(filename);
 console.log("The file " + filename + " was requested.");
 next();
 });
+
+
 
 // serve static files - e.g. html, css
 // this should always be the last line in the server file
